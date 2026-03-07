@@ -1,0 +1,108 @@
+@import "tailwindcss";
+@import "./design-system.css";
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: radial-gradient(circle at 16% 10%, #f4f2ef 0%, var(--color-canvas) 60%);
+  color: var(--color-text-primary);
+  font-family: "Avenir Next", "Helvetica Neue", "Segoe UI", sans-serif;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font: inherit;
+}
+
+.landscape-shell {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+.landscape-warning {
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--color-surface) 94%, #fff 6%);
+  border-radius: var(--radius);
+  padding: 1rem 1.2rem;
+  text-align: center;
+  max-width: 28rem;
+  box-shadow: 0 10px 24px color-mix(in srgb, var(--color-shadow) 34%, transparent);
+}
+
+.control-panel {
+  width: min(100%, 1200px);
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: linear-gradient(180deg, var(--color-surface-elevated), var(--color-surface));
+  padding: clamp(0.8rem, 2vw, 1.4rem);
+  display: grid;
+  grid-template-columns: minmax(200px, 27%) 1fr;
+  gap: 1rem;
+  box-shadow: 0 16px 36px color-mix(in srgb, var(--color-shadow) 35%, transparent);
+}
+
+.viewfinder {
+  border: 1px solid var(--color-border-strong);
+  border-radius: 0.8rem;
+  background: var(--color-surface-dark);
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  position: relative;
+}
+
+.viewfinder video,
+.viewfinder canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.viewfinder::after {
+  content: "LATENT VIEWFINDER";
+  position: absolute;
+  left: 0.6rem;
+  top: 0.6rem;
+  letter-spacing: 0.08em;
+  font-size: 0.66rem;
+  color: color-mix(in srgb, var(--color-text-on-dark) 70%, transparent);
+}
+
+.panel-block {
+  border: 1px solid var(--panel-border);
+  border-radius: 0.8rem;
+  padding: 0.85rem;
+  background: var(--panel-bg);
+  box-shadow: 0 5px 12px color-mix(in srgb, var(--color-shadow) 28%, transparent);
+}
+
+.mono {
+  font-family: "JetBrains Mono", "SF Mono", "Consolas", monospace;
+}
+
+@media (orientation: portrait) {
+  .control-panel {
+    display: none;
+  }
+
+  .landscape-warning {
+    display: block;
+  }
+}
+
+@media (orientation: landscape) {
+  .landscape-warning {
+    display: none;
+  }
+}
