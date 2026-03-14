@@ -1,2 +1,2 @@
-export { foundationColors, semanticColorTokens, componentTokenGroups } from "./tokens";
+export { foundationColors, semanticColorTokens, componentTokenGroups, shadowTokens } from "./tokens";
 export type { FoundationColorRole } from "./tokens";

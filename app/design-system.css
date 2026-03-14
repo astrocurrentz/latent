@@ -1,61 +1,150 @@
 :root {
-  /* Foundation tokens (provided palette) */
-  --ds-color-accent: #dd8943;
-  --ds-color-bg-light: #e9e7e4;
-  --ds-color-body-dark: #333331;
+  /* Foundation palette */
+  --ds-color-neutral-0: #fbfaf7;
+  --ds-color-neutral-50: #f3f1ed;
+  --ds-color-neutral-100: #e9e6e1;
+  --ds-color-neutral-200: #d7d2ca;
+  --ds-color-neutral-300: #bbb5ab;
+  --ds-color-neutral-400: #979084;
+  --ds-color-neutral-500: #736d63;
+  --ds-color-neutral-600: #575249;
+  --ds-color-neutral-700: #3f3b35;
+  --ds-color-neutral-800: #2f2c27;
+
+  --ds-color-accent-400: #d58a49;
+  --ds-color-accent-500: #c3793a;
+  --ds-color-accent-600: #a9632f;
+
+  --ds-color-signal-danger: #9b4f3b;
+  --ds-color-signal-warning: #ad7a33;
+  --ds-color-signal-success: #4f7e54;
+
+  /* Semantic color roles */
+  --ds-color-surface-canvas: var(--ds-color-neutral-100);
+  --ds-color-surface-panel: color-mix(in srgb, var(--ds-color-neutral-100) 85%, white 15%);
+  --ds-color-surface-elevated: var(--ds-color-neutral-50);
+  --ds-color-surface-sunken: color-mix(in srgb, var(--ds-color-neutral-200) 92%, var(--ds-color-neutral-300) 8%);
+
+  --ds-color-border-subtle: color-mix(in srgb, var(--ds-color-neutral-300) 75%, var(--ds-color-neutral-200) 25%);
+  --ds-color-border-default: var(--ds-color-neutral-300);
+  --ds-color-border-strong: var(--ds-color-neutral-400);
+
+  --ds-color-highlight-soft: rgba(255, 255, 255, 0.42);
+  --ds-color-highlight-edge: rgba(255, 255, 255, 0.62);
+
+  --ds-color-shadow-soft: rgba(26, 24, 21, 0.12);
+  --ds-color-shadow-key: rgba(26, 24, 21, 0.2);
+
+  --ds-color-text-primary: var(--ds-color-neutral-800);
+  --ds-color-text-secondary: var(--ds-color-neutral-600);
+  --ds-color-text-tertiary: var(--ds-color-neutral-500);
+  --ds-color-text-on-dark: #f7f5f1;
+
+  --ds-color-accent-primary: var(--ds-color-accent-500);
+  --ds-color-accent-muted: var(--ds-color-accent-400);
+  --ds-color-accent-strong: var(--ds-color-accent-600);
+
+  --ds-color-state-danger: var(--ds-color-signal-danger);
+  --ds-color-state-warning: var(--ds-color-signal-warning);
+  --ds-color-state-success: var(--ds-color-signal-success);
+
+  /* Shadow system by usage/depth */
+  --ds-shadow-surface-rest: 0 1px 1px var(--ds-color-shadow-soft), 0 6px 14px -8px var(--ds-color-shadow-key),
+    inset 0 1px 0 var(--ds-color-highlight-soft);
+  --ds-shadow-surface-raised: 0 2px 3px var(--ds-color-shadow-soft), 0 14px 26px -12px var(--ds-color-shadow-key),
+    inset 0 1px 0 var(--ds-color-highlight-edge);
+  --ds-shadow-surface-sunken: inset 0 1px 2px var(--ds-color-shadow-soft), inset 0 -1px 0 var(--ds-color-highlight-soft);
+
+  --ds-shadow-control-rest: 0 1px 1px var(--ds-color-shadow-soft), 0 4px 10px -8px var(--ds-color-shadow-key),
+    inset 0 1px 0 var(--ds-color-highlight-edge);
+  --ds-shadow-control-pressed: inset 0 1px 2px var(--ds-color-shadow-key), inset 0 -1px 0 var(--ds-color-highlight-soft);
+
+  --ds-shadow-display-inset: inset 0 2px 4px rgba(0, 0, 0, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --ds-shadow-focus-ring: 0 0 0 2px color-mix(in srgb, var(--ds-color-accent-muted) 46%, transparent);
+  --ds-screen-frame-bg-top: color-mix(in srgb, var(--ds-color-neutral-100) 72%, #b3c5a6 28%);
+  --ds-screen-frame-bg-bottom: color-mix(in srgb, var(--ds-color-neutral-200) 76%, #9bb28d 24%);
+  --ds-screen-frame-border: color-mix(in srgb, var(--ds-color-neutral-500) 52%, #6f8365 48%);
+  --ds-screen-frame-highlight: rgba(255, 255, 255, 0.34);
+  --ds-screen-layer-bg-top: color-mix(in srgb, #9cb28c 72%, var(--ds-color-neutral-100) 28%);
+  --ds-screen-layer-bg-bottom: color-mix(in srgb, #8ba179 76%, var(--ds-color-neutral-200) 24%);
+  --ds-screen-layer-border: color-mix(in srgb, #75896a 58%, var(--ds-color-neutral-500) 42%);
+  --ds-screen-layer-glass: rgba(255, 255, 255, 0.1);
+  --ds-screen-layer-shadow: rgba(0, 0, 0, 0.27);
+
+  --ds-radius-xs: 0.4rem;
+  --ds-radius-sm: 0.55rem;
+  --ds-radius-md: 0.8rem;
+  --ds-radius-lg: 1rem;
+  --ds-layout-safe-pad-top: calc(env(safe-area-inset-top, 0px) + 1rem);
+  --ds-layout-safe-pad-left: calc(env(safe-area-inset-left, 0px) + 1rem);
+  --ds-layout-safe-pad-right: calc(env(safe-area-inset-right, 0px) + 1rem);
+  --ds-layout-safe-pad-bottom: calc(env(safe-area-inset-bottom, 0px) + 1rem);
+  --ds-layout-left-rail-width: clamp(5.5rem, 8vw, 7rem);
+  --ds-layout-viewfinder-offset-top: calc(var(--ds-layout-safe-pad-top) + 1rem);
+  --ds-layout-viewfinder-offset-left: calc(var(--ds-layout-safe-pad-left) + var(--ds-layout-left-rail-width));
+  --ds-layout-viewfinder-width: clamp(9rem, 23vw, 27rem);
+  --ds-layout-viewfinder-aspect: 4 / 3;
+  --ds-layout-viewfinder-frame-pad: clamp(1rem, 0.48vw, 2rem);
+  --ds-layout-viewfinder-frame-radius: clamp(0.52rem, 1.1vw, 0.82rem);
+  --ds-layout-viewfinder-screen-radius: clamp(0.44rem, 0.92vw, 0.68rem);
+  --ds-layout-viewfinder-screen-inset: clamp(1rem, 0.38vw, 2rem);
+  --ds-layout-viewfinder-content-radius: var(--ds-layout-viewfinder-screen-radius);
+
+  /* Backward compatibility aliases */
+  --ds-color-accent: var(--ds-color-accent-primary);
+  --ds-color-bg-light: var(--ds-color-surface-canvas);
+  --ds-color-body-dark: var(--ds-color-text-primary);
   --ds-color-shadow-mid: #a2a19e;
 
-  /* Semantic tokens */
-  --color-canvas: var(--ds-color-bg-light);
-  --color-surface: #f3f1ee;
-  --color-surface-elevated: #fbfaf8;
-  --color-surface-pressed: #dfddd9;
-  --color-border: #b7b4af;
-  --color-border-strong: #8b8882;
-  --color-text-primary: var(--ds-color-body-dark);
-  --color-text-muted: #5f5d59;
-  --color-text-subtle: #7d7a75;
-  --color-text-on-dark: #f6f4f0;
-  --color-accent: var(--ds-color-accent);
-  --color-danger: #a34d35;
-  --color-shadow: var(--ds-color-shadow-mid);
-  --color-surface-dark: var(--ds-color-body-dark);
+  --color-canvas: var(--ds-color-surface-canvas);
+  --color-surface: var(--ds-color-surface-panel);
+  --color-surface-elevated: var(--ds-color-surface-elevated);
+  --color-surface-pressed: var(--ds-color-surface-sunken);
+  --color-surface-dark: var(--ds-color-neutral-700);
+  --color-border: var(--ds-color-border-default);
+  --color-border-strong: var(--ds-color-border-strong);
+  --color-text-primary: var(--ds-color-text-primary);
+  --color-text-muted: var(--ds-color-text-secondary);
+  --color-text-subtle: var(--ds-color-text-tertiary);
+  --color-text-on-dark: var(--ds-color-text-on-dark);
+  --color-accent: var(--ds-color-accent-primary);
+  --color-danger: var(--ds-color-state-danger);
+  --color-shadow: var(--ds-color-shadow-key);
 
-  /* Component tokens */
-  --panel-bg: color-mix(in srgb, var(--color-surface) 92%, #ffffff 8%);
-  --panel-border: color-mix(in srgb, var(--color-border) 80%, var(--color-border-strong) 20%);
+  --panel-bg: var(--ds-color-surface-panel);
+  --panel-border: var(--ds-color-border-default);
 
-  --button-primary-bg: var(--color-accent);
-  --button-primary-bg-hover: #c97736;
-  --button-primary-border: #b46f32;
-  --button-primary-fg: #241a12;
+  --button-primary-bg: var(--ds-color-accent-primary);
+  --button-primary-bg-hover: var(--ds-color-accent-muted);
+  --button-primary-border: var(--ds-color-accent-strong);
+  --button-primary-fg: #24190f;
 
-  --button-secondary-bg: var(--color-surface-pressed);
-  --button-secondary-bg-hover: #d4d2cc;
-  --button-secondary-border: var(--color-border);
-  --button-secondary-fg: var(--color-text-primary);
+  --button-secondary-bg: var(--ds-color-surface-sunken);
+  --button-secondary-bg-hover: color-mix(in srgb, var(--ds-color-surface-sunken) 84%, var(--ds-color-neutral-300) 16%);
+  --button-secondary-border: var(--ds-color-border-default);
+  --button-secondary-fg: var(--ds-color-text-primary);
 
-  --button-ghost-bg-hover: #dddad5;
-  --button-ghost-fg: var(--color-text-muted);
+  --button-ghost-bg-hover: color-mix(in srgb, var(--ds-color-surface-panel) 82%, var(--ds-color-neutral-200) 18%);
+  --button-ghost-fg: var(--ds-color-text-secondary);
 
-  --button-danger-bg: var(--color-danger);
-  --button-danger-bg-hover: #8e3f2a;
-  --button-danger-border: #7a3725;
-  --button-danger-fg: #fff7f3;
+  --button-danger-bg: var(--ds-color-state-danger);
+  --button-danger-bg-hover: color-mix(in srgb, var(--ds-color-state-danger) 85%, black 15%);
+  --button-danger-border: color-mix(in srgb, var(--ds-color-state-danger) 72%, black 28%);
+  --button-danger-fg: #fff8f5;
 
-  --badge-bg: #e0ddd8;
-  --badge-border: #b4b0aa;
-  --badge-fg: #3a3835;
+  --badge-bg: var(--ds-color-surface-sunken);
+  --badge-border: var(--ds-color-border-default);
+  --badge-fg: var(--ds-color-text-secondary);
 
-  --field-bg: var(--color-surface-elevated);
-  --field-border: var(--color-border);
-  --field-fg: var(--color-text-primary);
-  --field-placeholder: #8a8680;
+  --field-bg: var(--ds-color-surface-elevated);
+  --field-border: var(--ds-color-border-default);
+  --field-fg: var(--ds-color-text-primary);
+  --field-placeholder: var(--ds-color-text-tertiary);
 
-  --radius-sm: 0.5rem;
-  --radius-md: 0.7rem;
+  --radius-sm: var(--ds-radius-sm);
+  --radius-md: var(--ds-radius-md);
+  --radius: var(--ds-radius-md);
 
-  /* Compatibility aliases for existing styles */
   --bg: var(--color-canvas);
   --surface: var(--color-surface);
   --surface-2: var(--color-surface-elevated);
@@ -64,9 +153,9 @@
   --muted: var(--color-text-muted);
   --accent: var(--color-accent);
   --danger: var(--color-danger);
-  --radius: var(--radius-md);
 }
 
+/* Existing app utility classes */
 .ui-text-muted {
   color: var(--color-text-muted);
 }
@@ -89,6 +178,7 @@
   background: var(--field-bg);
   color: var(--field-fg);
   border-radius: var(--radius-sm);
+  box-shadow: var(--ds-shadow-surface-sunken);
 }
 
 .ui-input::placeholder {
@@ -98,10 +188,410 @@
 .ui-card {
   border: 1px solid var(--panel-border);
   background: var(--panel-bg);
+  box-shadow: var(--ds-shadow-surface-rest);
 }
 
 .ui-overlay-chip {
   border-radius: 0.35rem;
   background: color-mix(in srgb, var(--color-surface-dark) 78%, transparent);
   color: var(--color-text-on-dark);
+}
+
+.panel-block {
+  border: 1px solid var(--panel-border);
+  border-radius: 0.8rem;
+  padding: 0.85rem;
+  background: var(--panel-bg);
+  box-shadow: var(--ds-shadow-surface-rest);
+}
+
+/* Design-system primitives */
+.ds-panel {
+  position: relative;
+  border-radius: var(--ds-radius-md);
+  border: 1px solid var(--ds-color-border-default);
+  background: linear-gradient(180deg, var(--ds-color-surface-elevated), var(--ds-color-surface-panel));
+  box-shadow: var(--ds-shadow-surface-rest);
+  padding: 1rem;
+}
+
+.ds-panel::before {
+  content: "";
+  position: absolute;
+  inset: 1px 1px auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--ds-color-highlight-soft), transparent);
+  pointer-events: none;
+}
+
+.ds-panel[data-tone="sunken"] {
+  background: var(--ds-color-surface-sunken);
+  box-shadow: var(--ds-shadow-surface-sunken);
+}
+
+.ds-panel[data-tone="elevated"] {
+  background: var(--ds-color-surface-elevated);
+  box-shadow: var(--ds-shadow-surface-raised);
+}
+
+.ds-screen-wrapper {
+  position: relative;
+  display: block;
+  padding: var(--ds-screen-wrapper-pad, clamp(0.22rem, 0.75vw, 0.46rem));
+  border-radius: var(--ds-screen-wrapper-radius, clamp(0.72rem, 1.5vw, 1.1rem));
+  border: 1px solid var(--ds-screen-frame-border);
+  background: linear-gradient(180deg, var(--ds-screen-frame-bg-top), var(--ds-screen-frame-bg-bottom));
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08), inset 0 1px 0 var(--ds-screen-frame-highlight),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.14);
+}
+
+.ds-screen-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(120% 85% at 50% 0%, rgba(255, 255, 255, 0.14), transparent 52%);
+}
+
+.ds-screen-wrapper-screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: var(--ds-screen-wrapper-screen-radius, calc(var(--ds-screen-wrapper-radius, 1rem) - var(--ds-screen-wrapper-pad, 0.3rem)));
+  border: 1px solid var(--ds-screen-layer-border);
+  background: linear-gradient(180deg, var(--ds-screen-layer-bg-top), var(--ds-screen-layer-bg-bottom));
+  box-shadow: inset 0 3px 8px var(--ds-screen-layer-shadow), inset 0 12px 14px -14px rgba(0, 0, 0, 0.55),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.14);
+}
+
+.ds-screen-wrapper-screen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, var(--ds-screen-layer-glass), rgba(255, 255, 255, 0) 40%, rgba(0, 0, 0, 0.08));
+}
+
+.ds-screen-wrapper-screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.08;
+  background-image: repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.35) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.22) 0 1px, transparent 1px 4px);
+}
+
+.ds-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--ds-radius-sm);
+  border: 1px solid var(--ds-color-border-default);
+  box-shadow: var(--ds-shadow-control-rest);
+  background: var(--ds-color-surface-sunken);
+  color: var(--ds-color-text-primary);
+  font-size: 0.86rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  transition: background-color 140ms ease, border-color 140ms ease, transform 100ms ease;
+}
+
+.ds-button[data-size="sm"] {
+  min-height: 1.85rem;
+  padding: 0 0.65rem;
+}
+
+.ds-button[data-size="md"] {
+  min-height: 2.15rem;
+  padding: 0 0.9rem;
+}
+
+.ds-button[data-size="lg"] {
+  min-height: 2.4rem;
+  padding: 0 1.1rem;
+}
+
+.ds-button[data-variant="primary"] {
+  background: var(--ds-color-accent-primary);
+  border-color: var(--ds-color-accent-strong);
+  color: #26180f;
+}
+
+.ds-button[data-variant="secondary"] {
+  background: var(--ds-color-surface-sunken);
+  border-color: var(--ds-color-border-default);
+  color: var(--ds-color-text-primary);
+}
+
+.ds-button[data-variant="ghost"] {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  color: var(--ds-color-text-secondary);
+}
+
+.ds-button:hover {
+  filter: brightness(0.985);
+}
+
+.ds-button:active {
+  transform: translateY(1px);
+  box-shadow: var(--ds-shadow-control-pressed);
+}
+
+.ds-button:focus-visible {
+  outline: none;
+  box-shadow: var(--ds-shadow-control-rest), var(--ds-shadow-focus-ring);
+}
+
+.ds-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.ds-label {
+  display: inline-flex;
+  align-items: center;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.68rem;
+  line-height: 1;
+  color: var(--ds-color-text-tertiary);
+}
+
+.ds-label[data-dimmed="true"] {
+  opacity: 0.72;
+}
+
+.ds-knob-shell {
+  display: inline-grid;
+  gap: 0.4rem;
+  justify-items: center;
+}
+
+.ds-knob {
+  --ds-knob-size: 3rem;
+  --ds-knob-angle: 0deg;
+  width: var(--ds-knob-size);
+  height: var(--ds-knob-size);
+  border-radius: 999px;
+  border: 1px solid var(--ds-color-border-strong);
+  background: radial-gradient(circle at 33% 28%, var(--ds-color-surface-elevated), var(--ds-color-surface-sunken));
+  box-shadow: var(--ds-shadow-control-rest);
+  position: relative;
+}
+
+.ds-knob::after {
+  content: "";
+  position: absolute;
+  inset: 0.28rem;
+  border-radius: inherit;
+  border: 1px solid color-mix(in srgb, var(--ds-color-border-default) 72%, transparent);
+}
+
+.ds-knob-indicator {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 2px;
+  height: 34%;
+  border-radius: 999px;
+  background: var(--ds-color-text-secondary);
+  transform-origin: center calc(100% - 1px);
+  transform: translate(-50%, -100%) rotate(var(--ds-knob-angle));
+}
+
+.ds-slider-shell {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.ds-slider {
+  appearance: none;
+  width: 100%;
+  height: 1.25rem;
+  background: transparent;
+}
+
+.ds-slider::-webkit-slider-runnable-track {
+  height: 0.44rem;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--ds-color-surface-elevated), var(--ds-color-surface-sunken));
+  border: 1px solid var(--ds-color-border-default);
+  box-shadow: var(--ds-shadow-surface-sunken);
+}
+
+.ds-slider::-webkit-slider-thumb {
+  appearance: none;
+  margin-top: -0.32rem;
+  width: 1.08rem;
+  height: 1.08rem;
+  border-radius: 999px;
+  border: 1px solid var(--ds-color-border-strong);
+  background: var(--ds-color-surface-elevated);
+  box-shadow: var(--ds-shadow-control-rest);
+}
+
+.ds-slider::-moz-range-track {
+  height: 0.44rem;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--ds-color-surface-elevated), var(--ds-color-surface-sunken));
+  border: 1px solid var(--ds-color-border-default);
+  box-shadow: var(--ds-shadow-surface-sunken);
+}
+
+.ds-slider::-moz-range-thumb {
+  width: 1.08rem;
+  height: 1.08rem;
+  border-radius: 999px;
+  border: 1px solid var(--ds-color-border-strong);
+  background: var(--ds-color-surface-elevated);
+  box-shadow: var(--ds-shadow-control-rest);
+}
+
+.ds-display {
+  border-radius: var(--ds-radius-sm);
+  border: 1px solid color-mix(in srgb, var(--ds-color-neutral-700) 55%, var(--ds-color-neutral-800) 45%);
+  background: linear-gradient(180deg, #2c2b28, #1e1d1b);
+  color: var(--ds-color-text-on-dark);
+  box-shadow: var(--ds-shadow-display-inset);
+  padding: 0.7rem 0.8rem;
+  font-family: "JetBrains Mono", "SF Mono", "Consolas", monospace;
+  font-size: 0.76rem;
+  letter-spacing: 0.04em;
+}
+
+.ds-display[data-tone="muted"] {
+  color: color-mix(in srgb, var(--ds-color-text-on-dark) 72%, transparent);
+}
+
+.ds-switch-shell {
+  display: inline-grid;
+  gap: 0.45rem;
+}
+
+.ds-switch {
+  width: 3rem;
+  height: 1.65rem;
+  border-radius: 999px;
+  border: 1px solid var(--ds-color-border-default);
+  background: var(--ds-color-surface-sunken);
+  box-shadow: var(--ds-shadow-control-rest);
+  padding: 0.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  transition: background-color 140ms ease, border-color 140ms ease;
+}
+
+.ds-switch[data-state="on"] {
+  background: color-mix(in srgb, var(--ds-color-accent-primary) 32%, var(--ds-color-surface-sunken));
+  border-color: color-mix(in srgb, var(--ds-color-accent-strong) 55%, var(--ds-color-border-default));
+}
+
+.ds-switch-thumb {
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 999px;
+  border: 1px solid var(--ds-color-border-strong);
+  background: linear-gradient(180deg, var(--ds-color-surface-elevated), var(--ds-color-surface-panel));
+  box-shadow: var(--ds-shadow-control-rest);
+  transform: translateX(0);
+  transition: transform 140ms ease;
+}
+
+.ds-switch[data-state="on"] .ds-switch-thumb {
+  transform: translateX(1.34rem);
+}
+
+.ds-switch:focus-visible {
+  outline: none;
+  box-shadow: var(--ds-shadow-control-rest), var(--ds-shadow-focus-ring);
+}
+
+.ds-led {
+  display: inline-block;
+  width: 0.68rem;
+  height: 0.68rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--ds-color-border-strong) 62%, black 38%);
+  background: color-mix(in srgb, var(--ds-color-neutral-500) 50%, black 50%);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.22);
+}
+
+.ds-led[data-status="standby"] {
+  background: color-mix(in srgb, var(--ds-color-neutral-300) 50%, var(--ds-color-accent-muted));
+  box-shadow: 0 0 8px -3px color-mix(in srgb, var(--ds-color-accent-muted) 68%, transparent), inset 0 1px 1px rgba(255, 255, 255, 0.28);
+}
+
+.ds-led[data-status="active"] {
+  background: color-mix(in srgb, var(--ds-color-state-success) 72%, white 28%);
+  box-shadow: 0 0 10px -3px color-mix(in srgb, var(--ds-color-state-success) 82%, transparent), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+}
+
+.ds-led[data-status="warning"] {
+  background: color-mix(in srgb, var(--ds-color-state-warning) 74%, white 26%);
+  box-shadow: 0 0 10px -3px color-mix(in srgb, var(--ds-color-state-warning) 82%, transparent), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+}
+
+.ds-led[data-status="error"] {
+  background: color-mix(in srgb, var(--ds-color-state-danger) 74%, white 26%);
+  box-shadow: 0 0 10px -3px color-mix(in srgb, var(--ds-color-state-danger) 82%, transparent), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+}
+
+/* Demo page helpers */
+.ds-demo-page {
+  min-height: 100dvh;
+  background: radial-gradient(circle at 8% 10%, var(--ds-color-surface-elevated), var(--ds-color-surface-canvas) 52%);
+  color: var(--ds-color-text-primary);
+  padding: clamp(1rem, 2vw, 2rem);
+}
+
+.ds-demo-shell {
+  width: min(1100px, 100%);
+  margin: 0 auto;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.ds-demo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.8rem;
+}
+
+.ds-token-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border: 1px solid var(--ds-color-border-subtle);
+  border-radius: var(--ds-radius-sm);
+  padding: 0.45rem 0.55rem;
+  background: var(--ds-color-surface-elevated);
+}
+
+.ds-token-chip {
+  width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 0.34rem;
+  border: 1px solid var(--ds-color-border-default);
+  box-shadow: var(--ds-shadow-surface-rest);
+}
+
+.ds-shadow-chip {
+  width: 2.4rem;
+  height: 1.15rem;
+  border-radius: 0.35rem;
+  background: var(--ds-color-surface-panel);
+  border: 1px solid var(--ds-color-border-default);
+}
+
+@media (max-width: 760px) {
+  .ds-demo-grid {
+    grid-template-columns: 1fr;
+  }
 }

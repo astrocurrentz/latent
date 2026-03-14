@@ -8,10 +8,21 @@
 html,
 body {
   margin: 0;
-  min-height: 100%;
-  background: radial-gradient(circle at 16% 10%, #f4f2ef 0%, var(--color-canvas) 60%);
-  color: var(--color-text-primary);
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+  background: #f4f1ea;
+  color: #26231f;
   font-family: "Avenir Next", "Helvetica Neue", "Segoe UI", sans-serif;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+body {
+  position: fixed;
+  inset: 0;
 }
 
 a {
@@ -22,87 +33,366 @@ button {
   font: inherit;
 }
 
-.landscape-shell {
-  min-height: 100dvh;
+.app-sheet {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #f4f1ea;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-drag: none;
+}
+
+.app-sheet * {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-drag: none;
+}
+
+.latent-layout-page {
   display: grid;
   place-items: center;
-  padding: 1rem;
 }
 
-.landscape-warning {
-  border: 1px solid var(--line);
-  background: color-mix(in srgb, var(--color-surface) 94%, #fff 6%);
-  border-radius: var(--radius);
-  padding: 1rem 1.2rem;
-  text-align: center;
-  max-width: 28rem;
-  box-shadow: 0 10px 24px color-mix(in srgb, var(--color-shadow) 34%, transparent);
+.latent-layout-canvas {
+  position: relative;
+  width: min(100vw, calc(100vh * 900 / 414));
+  height: min(100vh, calc(100vw * 414 / 900));
+  max-width: 100vw;
+  max-height: 100vh;
+  overflow: hidden;
 }
 
-.control-panel {
-  width: min(100%, 1200px);
-  aspect-ratio: 16 / 9;
-  border: 1px solid var(--line);
-  border-radius: 1rem;
-  background: linear-gradient(180deg, var(--color-surface-elevated), var(--color-surface));
-  padding: clamp(0.8rem, 2vw, 1.4rem);
-  display: grid;
-  grid-template-columns: minmax(200px, 27%) 1fr;
-  gap: 1rem;
-  box-shadow: 0 16px 36px color-mix(in srgb, var(--color-shadow) 35%, transparent);
+.latent-layout-artwork {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto;
+  user-select: none;
+  z-index: 1;
+}
+
+.latent-layout-artwork > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto;
+}
+
+.latent-layout-artwork > svg * {
+  pointer-events: none;
+}
+
+.latent-layout-artwork #latent-shutter-button,
+.latent-layout-artwork #latent-shutter-button *,
+.latent-layout-artwork #latent-shared-button,
+.latent-layout-artwork #latent-shared-button *,
+.latent-layout-artwork #latent-button,
+.latent-layout-artwork #latent-button *,
+.latent-layout-artwork #latent-tui-button,
+.latent-layout-artwork #latent-tui-button *,
+.latent-layout-artwork #latent-tui-up-button,
+.latent-layout-artwork #latent-tui-up-button *,
+.latent-layout-artwork #latent-tui-down-button,
+.latent-layout-artwork #latent-tui-down-button * {
+  pointer-events: all;
+}
+
+.latent-layout-artwork #latent-shutter-button,
+.latent-layout-artwork #latent-shared-button,
+.latent-layout-artwork #latent-button,
+.latent-layout-artwork #latent-tui-button,
+.latent-layout-artwork #latent-tui-up-button,
+.latent-layout-artwork #latent-tui-down-button {
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.latent-layout-artwork #latent-shutter-button {
+  transform-box: fill-box;
+  transform-origin: center center;
+  transition: transform 190ms cubic-bezier(0.18, 0.85, 0.28, 1);
+}
+
+.latent-layout-artwork #latent-shutter-button:active,
+.latent-layout-artwork #latent-shutter-button.is-pressed {
+  transform: translateY(1.15px) scale(0.986);
+  transition-duration: 0ms;
+}
+
+.latent-layout-artwork #latent-shutter-outer-disc,
+.latent-layout-artwork #latent-shutter-inner-disc,
+.latent-layout-artwork #latent-shutter-inner-rim {
+  transition: r 190ms cubic-bezier(0.18, 0.85, 0.28, 1);
+}
+
+.latent-layout-artwork #latent-shutter-press-darken {
+  transition: fill-opacity 190ms cubic-bezier(0.18, 0.85, 0.28, 1), r 190ms cubic-bezier(0.18, 0.85, 0.28, 1);
+}
+
+.latent-layout-artwork #latent-shutter-button:active #latent-shutter-outer-disc,
+.latent-layout-artwork #latent-shutter-button.is-pressed #latent-shutter-outer-disc {
+  r: 34.55;
+  transition-duration: 0ms;
+}
+
+.latent-layout-artwork #latent-shutter-button:active #latent-shutter-inner-disc,
+.latent-layout-artwork #latent-shutter-button.is-pressed #latent-shutter-inner-disc {
+  r: 29.65;
+  transition-duration: 0ms;
+}
+
+.latent-layout-artwork #latent-shutter-button:active #latent-shutter-press-darken,
+.latent-layout-artwork #latent-shutter-button.is-pressed #latent-shutter-press-darken {
+  fill-opacity: 0;
+  r: 29.65;
+  transition-duration: 0ms;
+}
+
+.latent-layout-artwork #latent-shutter-button:active #latent-shutter-inner-rim,
+.latent-layout-artwork #latent-shutter-button.is-pressed #latent-shutter-inner-rim {
+  r: 29.3;
+  transition-duration: 0ms;
+}
+
+.latent-layout-artwork #latent-shared-base-disc,
+.latent-layout-artwork #latent-shared-surface-disc,
+.latent-layout-artwork #latent-shared-status-core,
+.latent-layout-artwork #latent-shared-status-overlay,
+.latent-layout-artwork #latent-shared-status-rim {
+  transition:
+    r 180ms cubic-bezier(0.18, 0.85, 0.28, 1),
+    fill 180ms cubic-bezier(0.18, 0.85, 0.28, 1),
+    opacity 180ms cubic-bezier(0.18, 0.85, 0.28, 1),
+    stroke-opacity 180ms cubic-bezier(0.18, 0.85, 0.28, 1);
+}
+
+.latent-layout-artwork #latent-shared-status-glow {
+  opacity: 0;
+  transition: opacity 180ms cubic-bezier(0.18, 0.85, 0.28, 1), r 180ms cubic-bezier(0.18, 0.85, 0.28, 1);
+}
+
+.latent-layout-artwork #latent-shared-button.is-shared #latent-shared-status-glow {
+  opacity: 0.85;
+}
+
+.latent-layout-artwork #latent-shared-button.is-shared #latent-shared-status-core {
+  fill: #dd8943;
+}
+
+.latent-layout-artwork #latent-shared-button.is-shared #latent-shared-status-overlay {
+  opacity: 0;
+}
+
+.latent-layout-artwork #latent-shared-button:active #latent-shared-base-disc,
+.latent-layout-artwork #latent-shared-button.is-pressed #latent-shared-base-disc {
+  r: 19.9;
+  transition-duration: 0ms;
+}
+
+.latent-layout-artwork #latent-shared-button:active #latent-shared-surface-disc,
+.latent-layout-artwork #latent-shared-button.is-pressed #latent-shared-surface-disc {
+  r: 18.05;
+  transition-duration: 0ms;
+}
+
+.latent-layout-artwork #latent-shared-button:active #latent-shared-status-glow,
+.latent-layout-artwork #latent-shared-button.is-pressed #latent-shared-status-glow {
+  r: 2.3;
+  transition-duration: 0ms;
+}
+
+.latent-layout-artwork #latent-shared-button:active #latent-shared-status-core,
+.latent-layout-artwork #latent-shared-button.is-pressed #latent-shared-status-core {
+  r: 2.3;
+  transition-duration: 0ms;
+}
+
+.latent-layout-artwork #latent-shared-button:active #latent-shared-status-overlay,
+.latent-layout-artwork #latent-shared-button.is-pressed #latent-shared-status-overlay,
+.latent-layout-artwork #latent-shared-button:active #latent-shared-status-rim,
+.latent-layout-artwork #latent-shared-button.is-pressed #latent-shared-status-rim {
+  r: 2.25;
+  transition-duration: 0ms;
+}
+
+.latent-layout-artwork #latent-shutter-focus-inner,
+.latent-layout-artwork #latent-shutter-focus-outer {
+  opacity: 0;
+  transition: opacity 120ms ease;
+  pointer-events: none;
+}
+
+.latent-layout-artwork #latent-shutter-button:focus-visible #latent-shutter-focus-inner,
+.latent-layout-artwork #latent-shutter-button:focus-visible #latent-shutter-focus-outer {
+  opacity: 1;
+}
+
+.latent-layout-artwork #latent-shared-button:focus-visible #latent-shared-outer-stroke {
+  stroke-opacity: 1;
+}
+
+.latent-layout-artwork #latent-button:focus-visible #latent-button-outer-stroke {
+  stroke: #dd8943;
+  stroke-width: 0.3;
+}
+
+.latent-layout-artwork #latent-tui-button:focus-visible #latent-tui-outer-stroke,
+.latent-layout-artwork #latent-tui-up-button:focus-visible #latent-tui-up-outer-stroke,
+.latent-layout-artwork #latent-tui-down-button:focus-visible #latent-tui-down-outer-stroke {
+  stroke: #dd8943;
+  stroke-width: 0.3;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .latent-layout-artwork #latent-shutter-button,
+  .latent-layout-artwork #latent-shutter-outer-disc,
+  .latent-layout-artwork #latent-shutter-inner-disc,
+  .latent-layout-artwork #latent-shutter-press-darken,
+  .latent-layout-artwork #latent-shutter-inner-rim,
+  .latent-layout-artwork #latent-shared-outer-shell,
+  .latent-layout-artwork #latent-shared-outer-stroke,
+  .latent-layout-artwork #latent-shared-base-disc,
+  .latent-layout-artwork #latent-shared-surface-disc,
+  .latent-layout-artwork #latent-shared-status-glow,
+  .latent-layout-artwork #latent-shared-status-core,
+  .latent-layout-artwork #latent-shared-status-overlay,
+  .latent-layout-artwork #latent-shared-status-rim,
+  .latent-layout-artwork #latent-shutter-focus-inner,
+  .latent-layout-artwork #latent-shutter-focus-outer {
+    transition: none;
+  }
+
+  .latent-layout-artwork #latent-shutter-button:active,
+  .latent-layout-artwork #latent-shutter-button.is-pressed {
+    transform: translateY(1px) scale(0.988);
+  }
+
+  .latent-layout-artwork #latent-shutter-button:active #latent-shutter-outer-disc,
+  .latent-layout-artwork #latent-shutter-button.is-pressed #latent-shutter-outer-disc {
+    r: 34.8;
+  }
+
+  .latent-layout-artwork #latent-shutter-button:active #latent-shutter-inner-disc,
+  .latent-layout-artwork #latent-shutter-button.is-pressed #latent-shutter-inner-disc {
+    r: 29.95;
+  }
+
+  .latent-layout-artwork #latent-shutter-button:active #latent-shutter-press-darken,
+  .latent-layout-artwork #latent-shutter-button.is-pressed #latent-shutter-press-darken {
+    fill-opacity: 0;
+    r: 29.95;
+  }
+
+  .latent-layout-artwork #latent-shutter-button:active #latent-shutter-inner-rim,
+  .latent-layout-artwork #latent-shutter-button.is-pressed #latent-shutter-inner-rim {
+    r: 29.6;
+  }
+
+  .latent-layout-artwork #latent-shared-button:active #latent-shared-base-disc,
+  .latent-layout-artwork #latent-shared-button.is-pressed #latent-shared-base-disc {
+    r: 20;
+  }
+
+  .latent-layout-artwork #latent-shared-button:active #latent-shared-surface-disc,
+  .latent-layout-artwork #latent-shared-button.is-pressed #latent-shared-surface-disc {
+    r: 18.15;
+  }
+
+  .latent-layout-artwork #latent-shared-button:active #latent-shared-status-glow,
+  .latent-layout-artwork #latent-shared-button.is-pressed #latent-shared-status-glow,
+  .latent-layout-artwork #latent-shared-button:active #latent-shared-status-core,
+  .latent-layout-artwork #latent-shared-button.is-pressed #latent-shared-status-core {
+    r: 2.35;
+  }
+
+  .latent-layout-artwork #latent-shared-button:active #latent-shared-status-overlay,
+  .latent-layout-artwork #latent-shared-button.is-pressed #latent-shared-status-overlay,
+  .latent-layout-artwork #latent-shared-button:active #latent-shared-status-rim,
+  .latent-layout-artwork #latent-shared-button.is-pressed #latent-shared-status-rim {
+    r: 2.3;
+  }
+
+}
+
+.latent-layout-viewfinder-window {
+  position: absolute;
+  left: 9.5667%;
+  top: 6.7633%;
+  width: 16.8778%;
+  height: 28.4787%;
+  z-index: 2;
+}
+
+.latent-layout-viewfinder-window .viewfinder {
+  border-radius: 7.9%;
+  background: #171512;
+  box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.4);
+}
+
+.viewfinder-shell {
+  position: absolute;
+  top: var(--ds-layout-viewfinder-offset-top);
+  left: var(--ds-layout-viewfinder-offset-left);
+  width: var(--ds-layout-viewfinder-width);
+  aspect-ratio: var(--ds-layout-viewfinder-aspect);
+}
+
+.viewfinder-frame {
+  --ds-screen-wrapper-pad: var(--ds-layout-viewfinder-frame-pad);
+  --ds-screen-wrapper-radius: var(--ds-layout-viewfinder-frame-radius);
+  --ds-screen-wrapper-screen-radius: var(--ds-layout-viewfinder-screen-radius);
+  width: 100%;
+  height: 100%;
+}
+
+.viewfinder-screen {
+  padding: var(--ds-layout-viewfinder-screen-inset);
+  width: 100%;
+  height: 100%;
+}
+
+.viewfinder-screen::after {
+  opacity: 0.06;
 }
 
 .viewfinder {
-  border: 1px solid var(--color-border-strong);
-  border-radius: 0.8rem;
-  background: var(--color-surface-dark);
-  overflow: hidden;
-  width: 100%;
-  aspect-ratio: 4 / 3;
   position: relative;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: var(--ds-layout-viewfinder-content-radius);
+  background: #000;
+  overflow: hidden;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.42), inset 0 -1px 0 rgba(255, 255, 255, 0.09);
 }
 
 .viewfinder video,
 .viewfinder canvas {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: inherit;
 }
 
-.viewfinder::after {
-  content: "LATENT VIEWFINDER";
+.viewfinder-overlay {
   position: absolute;
-  left: 0.6rem;
-  top: 0.6rem;
-  letter-spacing: 0.08em;
-  font-size: 0.66rem;
-  color: color-mix(in srgb, var(--color-text-on-dark) 70%, transparent);
-}
-
-.panel-block {
-  border: 1px solid var(--panel-border);
-  border-radius: 0.8rem;
-  padding: 0.85rem;
-  background: var(--panel-bg);
-  box-shadow: 0 5px 12px color-mix(in srgb, var(--color-shadow) 28%, transparent);
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  pointer-events: none;
+  user-select: none;
 }
 
 .mono {
   font-family: "JetBrains Mono", "SF Mono", "Consolas", monospace;
-}
-
-@media (orientation: portrait) {
-  .control-panel {
-    display: none;
-  }
-
-  .landscape-warning {
-    display: block;
-  }
-}
-
-@media (orientation: landscape) {
-  .landscape-warning {
-    display: none;
-  }
 }

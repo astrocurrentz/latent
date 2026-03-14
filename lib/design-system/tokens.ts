@@ -1,25 +1,27 @@
+import { colorFoundationTokens, colorTokenReferences, shadowTokenReferences } from "@/src/design-system/tokens";
+
 export type FoundationColorRole = "accent" | "lightBackground" | "darkBody" | "midGrayShadow";
 
 export const foundationColors: Record<FoundationColorRole, { hex: string; rgb: [number, number, number] }> = {
-  accent: { hex: "#DD8943", rgb: [221, 137, 67] },
-  lightBackground: { hex: "#E9E7E4", rgb: [233, 231, 228] },
-  darkBody: { hex: "#333331", rgb: [51, 51, 49] },
-  midGrayShadow: { hex: "#A2A19E", rgb: [162, 161, 158] }
+  accent: { hex: colorFoundationTokens.accent[400], rgb: [213, 138, 73] },
+  lightBackground: { hex: colorFoundationTokens.neutral[100], rgb: [233, 230, 225] },
+  darkBody: { hex: colorFoundationTokens.neutral[800], rgb: [47, 44, 39] },
+  midGrayShadow: { hex: colorFoundationTokens.neutral[400], rgb: [151, 144, 132] }
 };
 
 export const semanticColorTokens = {
-  canvas: "var(--color-canvas)",
-  surface: "var(--color-surface)",
-  surfaceElevated: "var(--color-surface-elevated)",
-  border: "var(--color-border)",
-  borderStrong: "var(--color-border-strong)",
-  textPrimary: "var(--color-text-primary)",
-  textMuted: "var(--color-text-muted)",
-  textSubtle: "var(--color-text-subtle)",
-  textOnDark: "var(--color-text-on-dark)",
-  accent: "var(--color-accent)",
-  danger: "var(--color-danger)",
-  shadow: "var(--color-shadow)"
+  canvas: colorTokenReferences.surface.canvas,
+  surface: colorTokenReferences.surface.panel,
+  surfaceElevated: colorTokenReferences.surface.elevated,
+  border: colorTokenReferences.border.default,
+  borderStrong: colorTokenReferences.border.strong,
+  textPrimary: colorTokenReferences.text.primary,
+  textMuted: colorTokenReferences.text.secondary,
+  textSubtle: colorTokenReferences.text.tertiary,
+  textOnDark: colorTokenReferences.text.onDark,
+  accent: colorTokenReferences.accent.primary,
+  danger: colorTokenReferences.state.danger,
+  shadow: colorTokenReferences.shadow.key
 } as const;
 
 export const componentTokenGroups = {
@@ -44,3 +46,5 @@ export const componentTokenGroups = {
     border: "var(--panel-border)"
   }
 } as const;
+
+export const shadowTokens = shadowTokenReferences;

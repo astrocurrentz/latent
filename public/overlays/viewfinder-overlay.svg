@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1440" width="1920" height="1440" role="img" aria-label="Latent viewfinder overlay" shape-rendering="geometricPrecision">
+  <defs>
+    <style>
+      .overlay-mark {
+        fill: #ffffff;
+        fill-opacity: 0.58;
+      }
+    </style>
+  </defs>
+
+  <g transform="translate(0 66)">
+    <!-- Outer guide marks -->
+    <rect class="overlay-mark" x="420" y="60" width="1080" height="18" rx="2" />
+    <rect class="overlay-mark" x="80" y="300" width="26" height="760" />
+    <rect class="overlay-mark" x="1814" y="300" width="26" height="760" />
+
+    <!-- Center framing marks -->
+    <rect class="overlay-mark" x="832" y="525" width="256" height="12" rx="1" />
+    <rect class="overlay-mark" x="628" y="615" width="8" height="240" />
+    <rect class="overlay-mark" x="1284" y="615" width="8" height="240" />
+    <rect class="overlay-mark" x="885" y="690" width="150" height="90" />
+    <rect class="overlay-mark" x="832" y="930" width="256" height="12" rx="1" />
+
+    <!-- Bottom alignment marks -->
+    <rect class="overlay-mark" x="420" y="1230" width="230" height="18" rx="1" />
+    <rect class="overlay-mark" x="1270" y="1230" width="230" height="18" rx="1" />
+
+    <!-- Bottom indicator cluster -->
+    <polygon class="overlay-mark" points="858,1146 898,1124 898,1168" />
+    <circle class="overlay-mark" cx="960" cy="1146" r="22" />
+    <polygon class="overlay-mark" points="1062,1146 1022,1124 1022,1168" />
+  </g>
+</svg>

@@ -95,6 +95,23 @@ Notes:
 - `build:web:export` performs an export-safe build and verifies `out/index.html` is not the placeholder.
 - For static-exported clients, set `NEXT_PUBLIC_API_BASE_URL` to your deployed API origin so app requests are routed correctly.
 
+## iOS Workflows (No Stale Bundle Drift)
+
+Use one of these commands to avoid simulator/app stale-web-asset mismatch:
+
+```bash
+# Development (live reload, no export/sync loop)
+npm run ios:dev
+
+# Release-style local run (always rebuild + sync first)
+npm run ios:run
+```
+
+Details:
+- `ios:dev` launches iOS with Capacitor live reload on `http://127.0.0.1:3000` and keeps the dev server process alive.
+- `ios:run` always rebuilds `out/` and syncs before deploying, so the app cannot run an outdated export by mistake.
+- Both commands auto-target the booted simulator when available. You can override with `IOS_TARGET=<udid>`.
+
 ## Supabase Setup
 
 - Apply SQL in `supabase/migrations/0001_latent_init.sql`.

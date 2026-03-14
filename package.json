@@ -14,17 +14,21 @@
     "test:unit": "vitest run tests/unit",
     "test:integration": "vitest run tests/integration",
     "test:e2e": "playwright test",
-    "cap:sync": "npx cap sync ios",
-    "cap:sync:release": "npm run build:web:export && npx cap sync ios"
+    "cap:sync": "npm run cap:sync:release",
+    "cap:sync:release": "npm run build:web:export && npx cap sync ios && node scripts/patch-metalpetal-deprecations.mjs",
+    "ios:run": "node scripts/run-ios-release.mjs",
+    "ios:dev": "node scripts/run-ios-live.mjs"
   },
   "dependencies": {
     "@capacitor/core": "^8.0.0",
+    "@capacitor/haptics": "^8.0.1",
     "@capacitor/ios": "^8.0.0",
     "@revenuecat/purchases-capacitor": "^10.2.0",
     "@supabase/supabase-js": "^2.49.0",
     "@tanstack/react-query": "^5.66.8",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "latent-camera": "file:plugins/latent-camera",
     "next": "^16.0.0",
     "opencc-js": "^1.0.5",
     "react": "^19.0.0",

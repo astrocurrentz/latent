@@ -1,9 +1,11 @@
 "use client";
 
 import { Capacitor } from "@capacitor/core";
-import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState, type MutableRefObject } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState, type MutableRefObject } from "react";
 import type { LensId } from "@/data/lenses";
-import { LatentCamera, type CaptureFrameResult } from "@/lib/native/latentCamera";
+import { LatentCamera, type CaptureFrameResult, type PreviewLayout } from "@/lib/native/latentCamera";
+import { cn } from "@/lib/utils";
+import { ScreenWrapper } from "@/src/design-system/components";
 
 export interface ViewfinderCaptureResult {
   masterUri: string;
@@ -12,6 +14,13 @@ export interface ViewfinderCaptureResult {
 
 export interface LatentViewfinderHandle {
   captureFrame: (lensId: LensId) => Promise<ViewfinderCaptureResult>;
+}
+
+interface LatentViewfinderProps {
+  chrome?: "framed" | "bare";
+  className?: string;
+  shellClassName?: string;
+  showOverlay?: boolean;
 }
 
 function useWebCamera(videoRef: MutableRefObject<HTMLVideoElement | null>) {
@@ -53,6 +62,114 @@ function useWebCamera(videoRef: MutableRefObject<HTMLVideoElement | null>) {
   }, [videoRef]);
 
   return ready;
+}
+
+function useNativePreview(viewfinderRef: MutableRefObject<HTMLDivElement | null>) {
+  useEffect(() => {
+    const isNativeIOS = Capacitor.isNativePlatform() && Capacitor.getPlatform() === "ios";
+    if (!isNativeIOS) {
+      return;
+    }
+
+    let active = true;
+    let frameId = 0;
+
+    const toLayout = (element: HTMLDivElement): PreviewLayout | null => {
+      const rect = element.getBoundingClientRect();
+      if (rect.width <= 0 || rect.height <= 0) {
+        return null;
+      }
+
+      const computedStyles = window.getComputedStyle(element);
+      const cornerRadius = Number.parseFloat(computedStyles.borderTopLeftRadius || "0");
+
+      return {
+        x: rect.left,
+        y: rect.top,
+        width: rect.width,
+        height: rect.height,
+        scale: window.devicePixelRatio || 1,
+        cornerRadius: Number.isFinite(cornerRadius) ? Math.max(cornerRadius, 0) : 0
+      };
+    };
+
+    const updateLayout = async () => {
+      if (!active || !viewfinderRef.current) {
+        return;
+      }
+
+      const layout = toLayout(viewfinderRef.current);
+      if (!layout) {
+        return;
+      }
+
+      try {
+        await LatentCamera.updatePreviewLayout({ layout });
+      } catch {
+        // Keep silent fallback behavior; the black viewfinder remains visible.
+      }
+    };
+
+    const startPreview = async () => {
+      if (!active || !viewfinderRef.current) {
+        return;
+      }
+
+      const layout = toLayout(viewfinderRef.current);
+      if (!layout) {
+        frameId = window.requestAnimationFrame(() => {
+          void startPreview();
+        });
+        return;
+      }
+
+      try {
+        await LatentCamera.startPreview({
+          layout,
+          cameraPreference: "rearPrimary",
+          distortion: {
+            enabled: true,
+            strength: "medium"
+          }
+        });
+      } catch {
+        // Keep silent fallback behavior; the black viewfinder remains visible.
+      }
+    };
+
+    const handleResize = () => {
+      void updateLayout();
+    };
+
+    const resizeObserver =
+      typeof ResizeObserver === "undefined"
+        ? null
+        : new ResizeObserver(() => {
+            void updateLayout();
+          });
+
+    frameId = window.requestAnimationFrame(() => {
+      void startPreview();
+    });
+
+    if (viewfinderRef.current && resizeObserver) {
+      resizeObserver.observe(viewfinderRef.current);
+    }
+
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("orientationchange", handleResize);
+    window.visualViewport?.addEventListener("resize", handleResize);
+
+    return () => {
+      active = false;
+      window.cancelAnimationFrame(frameId);
+      resizeObserver?.disconnect();
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("orientationchange", handleResize);
+      window.visualViewport?.removeEventListener("resize", handleResize);
+      void LatentCamera.stopPreview().catch(() => undefined);
+    };
+  }, [viewfinderRef]);
 }
 
 async function toDataUrl(canvas: HTMLCanvasElement, type: string, quality?: number): Promise<string> {
@@ -114,14 +231,8 @@ async function syntheticCapture(): Promise<CaptureFrameResult> {
     throw new Error("Unable to access synthetic camera context.");
   }
 
-  const gradient = context.createLinearGradient(0, 0, width, height);
-  gradient.addColorStop(0, "#20343a");
-  gradient.addColorStop(1, "#0a1216");
-  context.fillStyle = gradient;
+  context.fillStyle = "#0a0a0a";
   context.fillRect(0, 0, width, height);
-  context.fillStyle = "#e8f1f5";
-  context.font = "32px Menlo";
-  context.fillText(`LATENT ${new Date().toISOString()}`, 42, height / 2);
 
   return {
     masterUri: await toDataUrl(canvas, "image/png"),
@@ -131,9 +242,16 @@ async function syntheticCapture(): Promise<CaptureFrameResult> {
   };
 }
 
-export const LatentViewfinder = forwardRef<LatentViewfinderHandle>(function LatentViewfinder(_props, ref) {
+export const LatentViewfinder = forwardRef<LatentViewfinderHandle, LatentViewfinderProps>(function LatentViewfinder(
+  { chrome = "framed", className, shellClassName, showOverlay = true },
+  ref
+) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const viewfinderRef = useRef<HTMLDivElement | null>(null);
+  const isNativeIOS = Capacitor.isNativePlatform() && Capacitor.getPlatform() === "ios";
   const ready = useWebCamera(videoRef);
+
+  useNativePreview(viewfinderRef);
 
   useImperativeHandle(
     ref,
@@ -147,7 +265,7 @@ export const LatentViewfinder = forwardRef<LatentViewfinderHandle>(function Late
           };
         }
 
-        if (!videoRef.current) {
+        if (!videoRef.current || !ready) {
           return syntheticCapture();
         }
 
@@ -162,21 +280,25 @@ export const LatentViewfinder = forwardRef<LatentViewfinderHandle>(function Late
         };
       }
     }),
-    []
+    [ready]
   );
 
-  const helperText = useMemo(() => {
-    if (Capacitor.isNativePlatform()) {
-      return "Native camera active";
-    }
+  const livePreview = (
+    <div ref={viewfinderRef} className={cn("viewfinder", className)}>
+      <video ref={videoRef} playsInline muted aria-label="Latent camera preview" />
+      {!isNativeIOS && showOverlay ? <img src="/overlays/viewfinder-overlay.svg" alt="" aria-hidden className="viewfinder-overlay" /> : null}
+    </div>
+  );
 
-    return ready ? "Live preview" : "Camera permission required";
-  }, [ready]);
+  if (chrome === "bare") {
+    return <div className={cn("viewfinder-shell-bare", shellClassName)}>{livePreview}</div>;
+  }
 
   return (
-    <div className="viewfinder">
-      <video ref={videoRef} playsInline muted aria-label="Latent camera preview" />
-      <div className="ui-overlay-chip absolute bottom-2 left-2 px-2 py-1 text-[0.65rem]">{helperText}</div>
+    <div className={cn("viewfinder-shell", shellClassName)}>
+      <ScreenWrapper className="viewfinder-frame" screenClassName="viewfinder-screen">
+        {livePreview}
+      </ScreenWrapper>
     </div>
   );
 });

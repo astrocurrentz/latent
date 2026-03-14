@@ -1,0 +1,16 @@
+{
+  "name": "latent-camera",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local Capacitor iOS camera plugin with MetalPetal live preview",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "capacitor": {
+    "ios": {
+      "src": "ios"
+    }
+  },
+  "peerDependencies": {
+    "@capacitor/core": ">=8.0.0"
+  }
+}
