@@ -19,10 +19,11 @@
   "lens.title": "Latent Lens",
   "lens.locked": "Locked",
   "lens.plain": "Plain",
-  "lens.kodakGold": "Kodak Gold",
-  "lens.bw": "B&W",
   "lens.ascii": "ASCII",
-  "lens.glitch": "Glitch",
+  "lens.glitched": "Glitched",
+  "lens.halftone": "Halftone",
+  "lens.night": "Night",
   "lens.thermal": "Thermal",
+  "lens.xRay": "X-Ray",
   "auth.apple": "Sign in with Apple"
 }

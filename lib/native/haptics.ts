@@ -23,3 +23,7 @@ export function triggerButtonPressHaptic() {
 export function triggerShutterReleaseHaptic() {
   triggerImpact(ImpactStyle.Light, 6);
 }
+
+export function triggerSliderLockHaptic() {
+  triggerImpact(ImpactStyle.Medium, 14);
+}

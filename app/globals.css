@@ -90,6 +90,10 @@ button {
 
 .latent-layout-artwork #latent-shutter-button,
 .latent-layout-artwork #latent-shutter-button *,
+.latent-layout-artwork #latent-shutter-slider,
+.latent-layout-artwork #latent-shutter-slider *,
+.latent-layout-artwork #latent-double-toggle-button,
+.latent-layout-artwork #latent-double-toggle-button *,
 .latent-layout-artwork #latent-shared-button,
 .latent-layout-artwork #latent-shared-button *,
 .latent-layout-artwork #latent-button,
@@ -99,19 +103,36 @@ button {
 .latent-layout-artwork #latent-tui-up-button,
 .latent-layout-artwork #latent-tui-up-button *,
 .latent-layout-artwork #latent-tui-down-button,
-.latent-layout-artwork #latent-tui-down-button * {
+.latent-layout-artwork #latent-tui-down-button *,
+.latent-layout-artwork .latent-lens-button,
+.latent-layout-artwork .latent-lens-button * {
   pointer-events: all;
 }
 
 .latent-layout-artwork #latent-shutter-button,
+.latent-layout-artwork #latent-shutter-slider,
+.latent-layout-artwork #latent-double-toggle-button,
 .latent-layout-artwork #latent-shared-button,
 .latent-layout-artwork #latent-button,
 .latent-layout-artwork #latent-tui-button,
 .latent-layout-artwork #latent-tui-up-button,
-.latent-layout-artwork #latent-tui-down-button {
+.latent-layout-artwork #latent-tui-down-button,
+.latent-layout-artwork .latent-lens-button {
   cursor: pointer;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
+}
+
+.latent-layout-artwork #latent-shutter-button:focus,
+.latent-layout-artwork #latent-shutter-slider:focus,
+.latent-layout-artwork #latent-double-toggle-button:focus,
+.latent-layout-artwork #latent-shared-button:focus,
+.latent-layout-artwork #latent-button:focus,
+.latent-layout-artwork #latent-tui-button:focus,
+.latent-layout-artwork #latent-tui-up-button:focus,
+.latent-layout-artwork #latent-tui-down-button:focus,
+.latent-layout-artwork .latent-lens-button:focus {
+  outline: none;
 }
 
 .latent-layout-artwork #latent-shutter-button {
@@ -121,7 +142,8 @@ button {
 }
 
 .latent-layout-artwork #latent-shutter-button:active,
-.latent-layout-artwork #latent-shutter-button.is-pressed {
+.latent-layout-artwork #latent-shutter-button.is-pressed,
+.latent-layout-artwork #latent-shutter-button.is-disabled {
   transform: translateY(1.15px) scale(0.986);
   transition-duration: 0ms;
 }
@@ -137,28 +159,82 @@ button {
 }
 
 .latent-layout-artwork #latent-shutter-button:active #latent-shutter-outer-disc,
-.latent-layout-artwork #latent-shutter-button.is-pressed #latent-shutter-outer-disc {
+.latent-layout-artwork #latent-shutter-button.is-pressed #latent-shutter-outer-disc,
+.latent-layout-artwork #latent-shutter-button.is-disabled #latent-shutter-outer-disc {
   r: 34.55;
   transition-duration: 0ms;
 }
 
 .latent-layout-artwork #latent-shutter-button:active #latent-shutter-inner-disc,
-.latent-layout-artwork #latent-shutter-button.is-pressed #latent-shutter-inner-disc {
+.latent-layout-artwork #latent-shutter-button.is-pressed #latent-shutter-inner-disc,
+.latent-layout-artwork #latent-shutter-button.is-disabled #latent-shutter-inner-disc {
   r: 29.65;
   transition-duration: 0ms;
 }
 
 .latent-layout-artwork #latent-shutter-button:active #latent-shutter-press-darken,
-.latent-layout-artwork #latent-shutter-button.is-pressed #latent-shutter-press-darken {
+.latent-layout-artwork #latent-shutter-button.is-pressed #latent-shutter-press-darken,
+.latent-layout-artwork #latent-shutter-button.is-disabled #latent-shutter-press-darken {
   fill-opacity: 0;
   r: 29.65;
   transition-duration: 0ms;
 }
 
 .latent-layout-artwork #latent-shutter-button:active #latent-shutter-inner-rim,
-.latent-layout-artwork #latent-shutter-button.is-pressed #latent-shutter-inner-rim {
+.latent-layout-artwork #latent-shutter-button.is-pressed #latent-shutter-inner-rim,
+.latent-layout-artwork #latent-shutter-button.is-disabled #latent-shutter-inner-rim {
   r: 29.3;
   transition-duration: 0ms;
+}
+
+.latent-layout-artwork #latent-shutter-button.is-disabled {
+  opacity: 1;
+}
+
+.latent-layout-artwork #latent-shutter-slider {
+  touch-action: none;
+}
+
+.latent-layout-artwork #latent-shutter-slider.is-locked {
+  cursor: default;
+}
+
+.latent-layout-artwork #latent-shutter-slider-thumb {
+  transform-box: fill-box;
+  transform-origin: center center;
+  transition: transform 300ms cubic-bezier(0.2, 1.18, 0.3, 1);
+}
+
+.latent-layout-artwork #latent-shutter-slider.is-dragging #latent-shutter-slider-thumb {
+  transition: none;
+}
+
+.latent-layout-artwork #latent-double-toggle-on-track {
+  opacity: 0;
+  transition: opacity 170ms cubic-bezier(0.18, 0.85, 0.28, 1);
+}
+
+.latent-layout-artwork #latent-double-toggle-knob {
+  transform-box: fill-box;
+  transform-origin: center center;
+  transform: translateX(0px);
+  transition: transform 190ms cubic-bezier(0.18, 0.85, 0.28, 1);
+}
+
+.latent-layout-artwork #latent-double-toggle-button.is-on #latent-double-toggle-on-track {
+  opacity: 1;
+}
+
+.latent-layout-artwork #latent-double-toggle-button.is-on #latent-double-toggle-knob {
+  transform: translateX(23px);
+}
+
+.latent-layout-artwork #latent-double-toggle-button.is-pressed #latent-double-toggle-knob {
+  transform: translateX(0px) scale(0.985);
+}
+
+.latent-layout-artwork #latent-double-toggle-button.is-on.is-pressed #latent-double-toggle-knob {
+  transform: translateX(23px) scale(0.985);
 }
 
 .latent-layout-artwork #latent-shared-base-disc,
@@ -222,6 +298,58 @@ button {
   transition-duration: 0ms;
 }
 
+.latent-layout-artwork .latent-lens-button .latent-lens-cap,
+.latent-layout-artwork .latent-lens-button .latent-lens-press-darken,
+.latent-layout-artwork .latent-lens-button .latent-lens-text-core,
+.latent-layout-artwork .latent-lens-button .latent-lens-text-glow,
+.latent-layout-artwork .latent-lens-button .latent-lens-text-overlay {
+  transform-box: fill-box;
+  transform-origin: center center;
+}
+
+.latent-layout-artwork .latent-lens-button .latent-lens-cap,
+.latent-layout-artwork .latent-lens-button .latent-lens-press-darken {
+  transition:
+    transform 130ms cubic-bezier(0.18, 0.85, 0.28, 1),
+    fill-opacity 130ms cubic-bezier(0.18, 0.85, 0.28, 1);
+}
+
+.latent-layout-artwork .latent-lens-button .latent-lens-text-core {
+  transition:
+    transform 130ms cubic-bezier(0.18, 0.85, 0.28, 1),
+    fill 130ms cubic-bezier(0.18, 0.85, 0.28, 1);
+}
+
+.latent-layout-artwork .latent-lens-button .latent-lens-text-glow {
+  filter: drop-shadow(0 0 1.35px rgba(221, 137, 67, 0.72)) drop-shadow(0 0 3.25px rgba(221, 137, 67, 0.42));
+  transition:
+    transform 130ms cubic-bezier(0.18, 0.85, 0.28, 1),
+    opacity 130ms cubic-bezier(0.18, 0.85, 0.28, 1);
+}
+
+.latent-layout-artwork .latent-lens-button .latent-lens-text-overlay {
+  transition:
+    transform 130ms cubic-bezier(0.18, 0.85, 0.28, 1),
+    fill-opacity 130ms cubic-bezier(0.18, 0.85, 0.28, 1);
+}
+
+.latent-layout-artwork .latent-lens-button.is-pressed .latent-lens-cap,
+.latent-layout-artwork .latent-lens-button.is-pressed .latent-lens-press-darken {
+  transform: translateY(1.18px) scale(0.988);
+  transition-duration: 0ms;
+}
+
+.latent-layout-artwork .latent-lens-button.is-pressed .latent-lens-text-core,
+.latent-layout-artwork .latent-lens-button.is-pressed .latent-lens-text-glow,
+.latent-layout-artwork .latent-lens-button.is-pressed .latent-lens-text-overlay {
+  transform: translateY(0.95px);
+  transition-duration: 0ms;
+}
+
+.latent-layout-artwork .latent-lens-button:focus-visible .latent-lens-cap {
+  filter: drop-shadow(0 0 0.7px rgba(221, 137, 67, 0.9));
+}
+
 .latent-layout-artwork #latent-shutter-focus-inner,
 .latent-layout-artwork #latent-shutter-focus-outer {
   opacity: 0;
@@ -256,6 +384,9 @@ button {
   .latent-layout-artwork #latent-shutter-inner-disc,
   .latent-layout-artwork #latent-shutter-press-darken,
   .latent-layout-artwork #latent-shutter-inner-rim,
+  .latent-layout-artwork #latent-shutter-slider-thumb,
+  .latent-layout-artwork #latent-double-toggle-on-track,
+  .latent-layout-artwork #latent-double-toggle-knob,
   .latent-layout-artwork #latent-shared-outer-shell,
   .latent-layout-artwork #latent-shared-outer-stroke,
   .latent-layout-artwork #latent-shared-base-disc,
@@ -264,36 +395,47 @@ button {
   .latent-layout-artwork #latent-shared-status-core,
   .latent-layout-artwork #latent-shared-status-overlay,
   .latent-layout-artwork #latent-shared-status-rim,
+  .latent-layout-artwork .latent-lens-button .latent-lens-cap,
+  .latent-layout-artwork .latent-lens-button .latent-lens-press-darken,
+  .latent-layout-artwork .latent-lens-button .latent-lens-text-core,
+  .latent-layout-artwork .latent-lens-button .latent-lens-text-glow,
+  .latent-layout-artwork .latent-lens-button .latent-lens-text-overlay,
   .latent-layout-artwork #latent-shutter-focus-inner,
   .latent-layout-artwork #latent-shutter-focus-outer {
     transition: none;
   }
 
   .latent-layout-artwork #latent-shutter-button:active,
-  .latent-layout-artwork #latent-shutter-button.is-pressed {
+  .latent-layout-artwork #latent-shutter-button.is-pressed,
+  .latent-layout-artwork #latent-shutter-button.is-disabled {
     transform: translateY(1px) scale(0.988);
   }
 
   .latent-layout-artwork #latent-shutter-button:active #latent-shutter-outer-disc,
-  .latent-layout-artwork #latent-shutter-button.is-pressed #latent-shutter-outer-disc {
+  .latent-layout-artwork #latent-shutter-button.is-pressed #latent-shutter-outer-disc,
+  .latent-layout-artwork #latent-shutter-button.is-disabled #latent-shutter-outer-disc {
     r: 34.8;
   }
 
   .latent-layout-artwork #latent-shutter-button:active #latent-shutter-inner-disc,
-  .latent-layout-artwork #latent-shutter-button.is-pressed #latent-shutter-inner-disc {
+  .latent-layout-artwork #latent-shutter-button.is-pressed #latent-shutter-inner-disc,
+  .latent-layout-artwork #latent-shutter-button.is-disabled #latent-shutter-inner-disc {
     r: 29.95;
   }
 
   .latent-layout-artwork #latent-shutter-button:active #latent-shutter-press-darken,
-  .latent-layout-artwork #latent-shutter-button.is-pressed #latent-shutter-press-darken {
+  .latent-layout-artwork #latent-shutter-button.is-pressed #latent-shutter-press-darken,
+  .latent-layout-artwork #latent-shutter-button.is-disabled #latent-shutter-press-darken {
     fill-opacity: 0;
     r: 29.95;
   }
 
   .latent-layout-artwork #latent-shutter-button:active #latent-shutter-inner-rim,
-  .latent-layout-artwork #latent-shutter-button.is-pressed #latent-shutter-inner-rim {
+  .latent-layout-artwork #latent-shutter-button.is-pressed #latent-shutter-inner-rim,
+  .latent-layout-artwork #latent-shutter-button.is-disabled #latent-shutter-inner-rim {
     r: 29.6;
   }
+
 
   .latent-layout-artwork #latent-shared-button:active #latent-shared-base-disc,
   .latent-layout-artwork #latent-shared-button.is-pressed #latent-shared-base-disc {
@@ -317,6 +459,17 @@ button {
   .latent-layout-artwork #latent-shared-button:active #latent-shared-status-rim,
   .latent-layout-artwork #latent-shared-button.is-pressed #latent-shared-status-rim {
     r: 2.3;
+  }
+
+  .latent-layout-artwork .latent-lens-button.is-pressed .latent-lens-cap,
+  .latent-layout-artwork .latent-lens-button.is-pressed .latent-lens-press-darken {
+    transform: translateY(1.05px) scale(0.99);
+  }
+
+  .latent-layout-artwork .latent-lens-button.is-pressed .latent-lens-text-core,
+  .latent-layout-artwork .latent-lens-button.is-pressed .latent-lens-text-glow,
+  .latent-layout-artwork .latent-lens-button.is-pressed .latent-lens-text-overlay {
+    transform: translateY(0.85px);
   }
 
 }

@@ -19,10 +19,11 @@
   "lens.title": "潛影鏡頭",
   "lens.locked": "已鎖定",
   "lens.plain": "預設",
-  "lens.kodakGold": "柯達金",
-  "lens.bw": "黑白",
   "lens.ascii": "ASCII",
-  "lens.glitch": "故障",
+  "lens.glitched": "故障",
+  "lens.halftone": "半調",
+  "lens.night": "夜景",
   "lens.thermal": "熱成像",
+  "lens.xRay": "X 光",
   "auth.apple": "使用 Apple 登入"
 }

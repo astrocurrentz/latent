@@ -2,11 +2,12 @@ export const FREE_LENS = "plain";
 
 export const LENSES = [
   { id: "plain", labelKey: "lens.plain", premium: false },
-  { id: "kodak_gold", labelKey: "lens.kodakGold", premium: true },
-  { id: "bw", labelKey: "lens.bw", premium: true },
-  { id: "ascii", labelKey: "lens.ascii", premium: true },
-  { id: "glitch", labelKey: "lens.glitch", premium: true },
-  { id: "thermal", labelKey: "lens.thermal", premium: true }
+  { id: "ascii", labelKey: "lens.ascii", premium: false },
+  { id: "glitched", labelKey: "lens.glitched", premium: false },
+  { id: "halftone", labelKey: "lens.halftone", premium: false },
+  { id: "night", labelKey: "lens.night", premium: false },
+  { id: "thermal", labelKey: "lens.thermal", premium: false },
+  { id: "x-ray", labelKey: "lens.xRay", premium: false }
 ] as const;
 
 export type LensId = (typeof LENSES)[number]["id"];
