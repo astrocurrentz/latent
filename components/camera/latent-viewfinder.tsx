@@ -20,7 +20,6 @@ interface LatentViewfinderProps {
   chrome?: "framed" | "bare";
   className?: string;
   shellClassName?: string;
-  showOverlay?: boolean;
 }
 
 function useWebCamera(videoRef: MutableRefObject<HTMLVideoElement | null>) {
@@ -243,12 +242,11 @@ async function syntheticCapture(): Promise<CaptureFrameResult> {
 }
 
 export const LatentViewfinder = forwardRef<LatentViewfinderHandle, LatentViewfinderProps>(function LatentViewfinder(
-  { chrome = "framed", className, shellClassName, showOverlay = true },
+  { chrome = "framed", className, shellClassName },
   ref
 ) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const viewfinderRef = useRef<HTMLDivElement | null>(null);
-  const isNativeIOS = Capacitor.isNativePlatform() && Capacitor.getPlatform() === "ios";
   const ready = useWebCamera(videoRef);
 
   useNativePreview(viewfinderRef);
@@ -286,7 +284,6 @@ export const LatentViewfinder = forwardRef<LatentViewfinderHandle, LatentViewfin
   const livePreview = (
     <div ref={viewfinderRef} className={cn("viewfinder", className)}>
       <video ref={videoRef} playsInline muted aria-label="Latent camera preview" />
-      {!isNativeIOS && showOverlay ? <img src="/overlays/viewfinder-overlay.svg" alt="" aria-hidden className="viewfinder-overlay" /> : null}
     </div>
   );
 

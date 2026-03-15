@@ -96,8 +96,5 @@ fragment float4 latentViewfinderWarp(
     sourceColor.rgb += topSheen * 0.025;
     sourceColor.rgb = clamp(sourceColor.rgb, 0.0, 1.0);
 
-    // Keep overlay stable in output/screen space; only distort the camera image.
-    float overlayAlpha = overlayMask(uv) * 0.58;
-    float3 composited = mix(sourceColor.rgb, float3(1.0), overlayAlpha);
-    return float4(composited, sourceColor.a);
+    return sourceColor;
 }

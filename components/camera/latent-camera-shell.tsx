@@ -28,7 +28,7 @@ export function LatentCameraShell({ latentCameraSvg }: LatentCameraShellProps) {
     <main className="app-sheet latent-layout-page">
       <section className="latent-layout-canvas" aria-label="Latent camera interface">
         <div className="latent-layout-artwork" dangerouslySetInnerHTML={{ __html: latentCameraSvg }} />
-        <LatentViewfinder ref={viewfinderRef} chrome="bare" showOverlay={false} shellClassName="latent-layout-viewfinder-window" />
+        <LatentViewfinder ref={viewfinderRef} chrome="bare" shellClassName="latent-layout-viewfinder-window" />
       </section>
       <ShutterInteraction onCommit={handleShutterCommit} />
       <SharedButtonInteraction />
